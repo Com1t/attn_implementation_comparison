@@ -94,7 +94,7 @@ Modify the script to change parameters like
 ---
 
 ## Results Summary
-In the configuration of
+The following benchmarks were conducted on an NVIDIA GeForce RTX 3050 (8 GB) GPU with the following parameters:
 ```
 batch_size = 1
 seq_len = 4096
