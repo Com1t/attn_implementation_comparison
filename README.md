@@ -94,10 +94,10 @@ Modify the script to change parameters like
 ---
 
 ## Results Summary
-The following benchmarks were conducted on an NVIDIA GeForce RTX 3050 (8 GB) GPU with the following parameters:
+The following benchmarks were conducted on an NVIDIA A100 (80 GB) GPU with the following parameters:
 ```
 batch_size = 1
-seq_len = 4096
+seq_len = 8192
 embed_dim = 4096
 num_heads = 32
 head_dim = embed_dim // num_heads
@@ -105,10 +105,10 @@ head_dim = embed_dim // num_heads
 
 | Attention Implementation | Average Runtime (ms) | Correctness Verified |
 |---------------------------|----------------------|-----------------------|
-| **Torch SDPA**            | ~30.2                | ✅                   |
-| **Hand-crafted**          | ~81.2                | ✅                   |
-| **xFormers**              | ~7.6                 | ✅                   |
-| **FlashAttention**        | ~7.5                 | ✅                   |
+| **Torch SDPA**            | ~13.6                | ✅                   |
+| **Hand-crafted**          | ~44.4                | ✅                   |
+| **xFormers**              | ~3.0                 | ✅                   |
+| **FlashAttention**        | ~2.9                 | ✅                   |
 
 ---
 
