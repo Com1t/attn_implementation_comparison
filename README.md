@@ -22,6 +22,9 @@ The benchmarks evaluate runtime performance and correctness of each implementati
 3. **Customizable Input Dimensions**:
    - Easily adjust batch size, sequence length, embedding dimensions, and more.
 
+4. **Tensor Parallel**:
+   - Implements tensor parallelism by distributing attention computation across GPUs, partitioning the query, key, and value tensors along the head dimension, and performing localized computations. This enables efficient scaling for large sequence lengths and embedding dimensions while maintaining model accuracy.
+
 ---
 
 ## Requirements
@@ -41,13 +44,31 @@ The benchmarks evaluate runtime performance and correctness of each implementati
    git clone https://github.com/YourUsername/attention-comparison.git
    cd attention-comparison
    python attn_comparison.py
+   torchrun --nproc-per-node 4 ./dist_attn_comparison.py
    ```
 **Example Output**
+Local
 ```
 SDPA Time: 30.217230 ms
 Torch Time: 81.202161 ms
 xformers Time: 7.641697 ms
 Flash Attention Time: 7.457602 ms
+```
+
+Distributed (Check the longest)
+```
+[Rank 3] xformers Time: 0.184095 ms
+[Rank 2] xformers Time: 0.184822 ms
+[Rank 3] Flash Attention Time: 0.096738 ms
+[Rank 2] Flash Attention Time: 0.097036 ms
+[Rank 1] xformers Time: 0.405443 ms
+[Rank 3] SDPA Time: 0.020730 ms
+[Rank 2] SDPA Time: 0.020969 ms
+[Rank 1] Flash Attention Time: 0.220585 ms
+[Rank 0] xformers Time: 0.580966 ms
+[Rank 1] SDPA Time: 0.038075 ms
+[Rank 0] Flash Attention Time: 0.306368 ms
+[Rank 0] SDPA Time: 0.324106 ms
 ```
 
 ---
