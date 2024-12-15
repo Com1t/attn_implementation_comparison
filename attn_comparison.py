@@ -7,7 +7,7 @@ from flash_attn import flash_attn_func
 from xformers.ops import fmha, LowerTriangularMask
 
 
-def sdpa_benchmark(query, key, value, attn_mask, num_runs=10):
+def sdpa_benchmark(query, key, value, num_runs=10):
     """Benchmark torch sdpa attention module with given inputs"""
     # Warmup
     with torch.no_grad():
@@ -17,8 +17,7 @@ def sdpa_benchmark(query, key, value, attn_mask, num_runs=10):
                 query=query,
                 key=key,
                 value=value,
-                attn_mask=attn_mask,
-                is_causal=False  # Enable causal masking explicitly
+                is_causal=True,  # Enable internal causal masking
             )
 
     # Benchmark
@@ -32,8 +31,7 @@ def sdpa_benchmark(query, key, value, attn_mask, num_runs=10):
                 query=query,
                 key=key,
                 value=value,
-                attn_mask=attn_mask,
-                is_causal=False  # Enable causal masking explicitly
+                is_causal=True,  # Enable internal causal masking
             )
 
     torch.cuda.synchronize()
@@ -162,9 +160,7 @@ if __name__ == "__main__":
     # Runs of benchmark
     num_runs = 20
 
-    sdpa_attn_output, sdpa_time = sdpa_benchmark(
-        query, key, value, attn_mask, num_runs=num_runs
-    )
+    sdpa_attn_output, sdpa_time = sdpa_benchmark(query, key, value, num_runs=num_runs)
     # print("SDPA Output:", sdpa_attn_output)
     print(f"SDPA Time: {sdpa_time * 1e3:.6f} ms")
 

@@ -105,7 +105,7 @@ head_dim = embed_dim // num_heads
 
 | Attention Implementation | Average Runtime (ms) | Correctness Verified |
 |---------------------------|----------------------|-----------------------|
-| **Torch SDPA**            | ~13.6                | ✅                   |
+| **Torch SDPA**            | ~3.0                 | ✅                   |
 | **Hand-crafted**          | ~44.4                | ✅                   |
 | **xFormers**              | ~3.0                 | ✅                   |
 | **FlashAttention**        | ~2.9                 | ✅                   |
